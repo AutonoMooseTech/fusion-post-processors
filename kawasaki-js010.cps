@@ -1,13 +1,6 @@
 /**
-  Copyright (C) 2012-2021 by Autodesk, Inc.
+  Copyright (C) AutonoMoose Technology
   All rights reserved.
-
-  KUKA KRL post processor configuration.
-
-  $Revision: 43470 147f5cf60e9217cf9c3365dc511a0f631d89bb16 $
-  $Date: 2021-10-13 20:53:32 $
-
-  FORKID {E86D1E53-6B40-4EEB-A94E-552C25F118A4}
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,14 +11,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-description = "KUKA Robotics - KRL";
-vendor = "KUKA";
-vendorUrl = "http://www.kuka.com";
-legal = "Copyright (C) 2012-2021 by Autodesk, Inc.";
-certificationLevel = 2;
-minimumRevision = 45702;
-
-longDescription = "Generic KUKA KRL post. Please refer to the User Guide for programming specification and sample. Always validate with KUKA.Sim before loading any toolpath on your Robot.";
+description = "Kawasaki Heavy Industries - JS010 AD Controller";
+vendor = "AutonoMoose Technology";
+vendorUrl = "https://autonomoose.technology";
+legal = "Copyright (C) 2012-2022 by AutonoMoose Technology";
+longDescription = "Custom post processor for the Kawasaki JS010 robot arm to allow it to perform machining operations";
 
 extension = "src";
 programNameIsInteger = false;
