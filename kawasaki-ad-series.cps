@@ -130,7 +130,9 @@ function onLinear5D(x, y, z, i, j, k, feed) {
   posCounter += 1;
 }
 
-function onClose() {
+function onManualNC(command, value) {
+  writeln(value)
+}
 
 }
 
