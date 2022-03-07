@@ -15,7 +15,7 @@ extension = "as";
 programNameIsInteger = false;
 setCodePage("ascii");
 
-capabilities = CAPABILITY_MILLING | CAPABILITY_TURNING;
+capabilities = CAPABILITY_MILLING;
 tolerance = spatial(0.1, MM);
 
 highFeedrate = (unit == IN) ? 100 : 1000;
@@ -74,7 +74,7 @@ function onOpen() {
   // control requires output only in mm
   unit = MM;
 
-  setWordSeparator(",");
+  setWordSeparator(" ");
 
   if (programName) {
     println(programName)
@@ -84,12 +84,49 @@ function onOpen() {
   writeComment("creation date: " + d.toLocaleDateString() + " " + d.toLocaleTimeString());
 }
 
+function getEulerAngle(vectorZ, angleInDegrees) {
+  // X is rotated about standard XY-plane, not provided Z-axis
+  var vectorX = Matrix.getZRotation(toRad(angleInDegrees)).transposed.multiply(new Vector(1, 0, 0));
+
+  // X and Z form a non-orthogonal matrix, so cannot use standard matrix calculations
+  var yAxis = Vector.cross(vectorZ, vectorX);
+  var xAxis = Vector.cross(yAxis, vectorZ);
+  var yAxis = Vector.cross(vectorZ, xAxis);
+
+  m = new Matrix(xAxis, yAxis, vectorZ).transposed;
+
+  if (getProperty("flipToolFrame")) {
+    m = Matrix.getAxisRotation(new Vector(0, 1, 0), Math.PI).multiply(m);
+  }
+
+  ea = new Vector();
+  var ea = m.transposed.getEuler2(EULER_ZYZ_R).toDeg();
+
+  return ea;
+}
+
 var posCounter = 0;
 
-function onLinear5D(x, y, z, a, b, c, feed) {
+// x,y,z is the tool position vector
+// i,j,k is the tool axis vector
+function onLinear5D(x, y, z, i, j, k, feed) {
   var arrayName = 'pos[' + posCounter + ']';
-  var xyzPos = xOutput.format(x) + '\t' + yOutput.format(y) + '\t' + zOutput.format(z);
-  writeln(arrayName + '\t' + xyzPos + '\t0.0\t0.0\t0.0')
+
+  var xyzPos = xOutput.format(x) + ' ' + yOutput.format(y) + ' ' + zOutput.format(z);
+  
+  var vAngle = new Vector(i, j, k);
+
+  var ea = getEulerAngle(vAngle, 0);
+  
+  writeWords(arrayName,
+    xOutput.format(x),
+    yOutput.format(y),
+    zOutput.format(z),
+    oOutput.format(ea.x),
+    aOutput.format(ea.y),
+    tOutput.format(ea.z)
+  )
+  
   posCounter += 1;
 }
 
