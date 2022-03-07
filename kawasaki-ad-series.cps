@@ -134,6 +134,8 @@ function onManualNC(command, value) {
   writeln(value)
 }
 
+function onClose() {
+  writeComment("end of program")
 }
 
 
