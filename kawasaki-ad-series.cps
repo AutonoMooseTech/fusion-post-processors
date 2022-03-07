@@ -3,11 +3,11 @@
   All rights reserved.
 */
 
-description = "Kawasaki Heavy Industries - JS010 AD Controller";
+description = "Kawasaki Heavy Industries - AD Controller";
 vendor = "AutonoMoose Technology";
 vendorUrl = "https://autonomoose.technology";
 legal = "Copyright (C) 2012-2022 by AutonoMoose Technology";
-longDescription = "Custom post processor for the Kawasaki JS010 robot arm to allow it to perform machining operations";
+longDescription = "Custom post processor for the Kawasaki AD series control.";
 certificationLevel = 2;
 minimumRevision = 45702;
 
