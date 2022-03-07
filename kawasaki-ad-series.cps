@@ -95,10 +95,6 @@ function getEulerAngle(vectorZ, angleInDegrees) {
 
   m = new Matrix(xAxis, yAxis, vectorZ).transposed;
 
-  if (getProperty("flipToolFrame")) {
-    m = Matrix.getAxisRotation(new Vector(0, 1, 0), Math.PI).multiply(m);
-  }
-
   ea = new Vector();
   var ea = m.transposed.getEuler2(EULER_ZYZ_R).toDeg();
 
